@@ -1,13 +1,28 @@
-import "./globals.css";
-import Header from "@/components/Header";
-import { Inter } from 'next/font/google'
+'use client';
+import Header from '@/components/Header'; // your existing header component
+import TaskForm from '@/components/TaskForm';
+import TaskList from '@/components/TaskList';
+import { useEffect, useState } from 'react';
 
-const inter = Inter({ subsets: ['latin'] })
+export default function HomePage() {
+  const [refresh, setRefresh] = useState(false);
 
-export default function Home() {
+  const handleAdd = (task: any) => {
+    const existing = JSON.parse(localStorage.getItem('tasks') || '[]');
+    localStorage.setItem('tasks', JSON.stringify([...existing, task]));
+    setRefresh(!refresh); // force re-render TaskList
+  };
+
   return (
-  <main className={inter.className}>
-  <Header />
-  </main>
+    <main className="min-h-screen bg-gray-50">
+      <Header />
+
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold text-center mb-6">Your Tasks</h1>
+
+        <TaskForm onAdd={handleAdd} />
+        <TaskList key={refresh ? 'a' : 'b'} /> {/* key forces re-render */}
+      </div>
+    </main>
   );
 }

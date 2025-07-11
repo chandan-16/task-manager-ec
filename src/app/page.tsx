@@ -1,5 +1,5 @@
 'use client';
-import Header from '@/components/Header'; // your existing header component
+import Header from '@/components/Header';
 import TaskForm from '@/components/TaskForm';
 import TaskList from '@/components/TaskList';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ export default function HomePage() {
   const handleAdd = (task: any) => {
     const existing = JSON.parse(localStorage.getItem('tasks') || '[]');
     localStorage.setItem('tasks', JSON.stringify([...existing, task]));
-    setRefresh(!refresh); // force re-render TaskList
+    setRefresh(!refresh); 
   };
 
   return (
@@ -21,7 +21,7 @@ export default function HomePage() {
         <h1 className="text-2xl font-bold text-center mb-6">Your Tasks</h1>
 
         <TaskForm onAdd={handleAdd} />
-        <TaskList key={refresh ? 'a' : 'b'} /> {/* key forces re-render */}
+        <TaskList key={refresh ? 'a' : 'b'} /> 
       </div>
     </main>
   );
